@@ -8,19 +8,21 @@ import "rxjs/add/operator/filter";
 import "rxjs/add/operator/map";
 import { of } from "rxjs/observable/of";
 
-export interface Meal {
+export interface Workout {
   name: string;
-  ingredients: string[];
+  type: string;
+  strength: any;
+  endurance: any;
   timestamp: number;
   $key: string;
   $exists: () => boolean;
 }
 
 @Injectable()
-export class MealsService {
-  meals$: Observable<Meal[]> = this.db
-    .list(`meals/${this.uid}`)
-    .do<Meal[]>((next) => this.store.set("meals", next));
+export class WorkoutsService {
+  workouts$: Observable<Workout[]> = this.db
+    .list(`workouts/${this.uid}`)
+    .do<Workout[]>((next) => this.store.set("workouts", next));
 
   constructor(
     private store: Store,
@@ -32,25 +34,27 @@ export class MealsService {
     return this.authService.user.uid;
   }
 
-  getMeal(key: string): Observable<Meal | {}> {
+  getWorkout(key: string): Observable<Workout | {}> {
     if (!key) {
       return of({});
     }
     return this.store
-      .select<Meal[]>("meals")
+      .select<Workout[]>("workouts")
       .filter(Boolean)
-      .map((meals: Meal[]) => meals.find((meal) => meal.$key === key));
+      .map((workouts: Workout[]) =>
+        workouts.find((workout) => workout.$key === key)
+      );
   }
 
-  addmeal(meal: Meal) {
-    return this.db.list(`meals/${this.uid}`).push(meal);
+  addWorkout(workout: Workout) {
+    return this.db.list(`workouts/${this.uid}`).push(workout);
   }
 
-  updateMeal(key: string, meal: Meal) {
-    return this.db.object(`meals/${this.uid}/${key}`).update(meal);
+  updateWorkout(key: string, workout: Workout) {
+    return this.db.object(`workouts/${this.uid}/${key}`).update(workout);
   }
 
-  removeMeal(key: string) {
-    return this.db.list(`meals/${this.uid}`).remove(key);
+  removeWorkout(key: string) {
+    return this.db.list(`workouts/${this.uid}`).remove(key);
   }
 }
