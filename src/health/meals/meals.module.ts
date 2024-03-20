@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { RouterModule, Routes } from "@angular/router";
 import { SharedModule } from "../shared/share.module";
 import { MealComponent } from "./containers/meal/meal.component";
+import { MealFormComponent } from "./components/meal-form/meal-form.component";
 
 export const ROUTES: Routes = [
   {
@@ -13,6 +14,10 @@ export const ROUTES: Routes = [
   },
   {
     path: "new",
+    component: MealComponent,
+  },
+  {
+    path: ":id",
     component: MealComponent,
   },
 ];
@@ -24,6 +29,6 @@ export const ROUTES: Routes = [
     RouterModule.forChild(ROUTES),
     SharedModule,
   ],
-  declarations: [MealsComponent, MealComponent],
+  declarations: [MealsComponent, MealComponent, MealFormComponent],
 })
 export class MealsModule {}
