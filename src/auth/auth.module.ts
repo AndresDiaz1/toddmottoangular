@@ -1,10 +1,14 @@
-import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { RouterModule, Routes } from "@angular/router";
+
+// third-party modules
 import { AngularFireModule, FirebaseAppConfig } from "angularfire2";
 import { AngularFireAuthModule } from "angularfire2/auth";
 import { AngularFireDatabaseModule } from "angularfire2/database";
-import { SharedModule } from "./shared/share.module";
+
+// shared modules
+import { SharedModule } from "./shared/shared.module";
 
 export const ROUTES: Routes = [
   {
@@ -36,9 +40,7 @@ export const firebaseConfig: FirebaseAppConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireAuthModule,
     AngularFireDatabaseModule,
-    SharedModule.forRoot(), // Truco para que no cree más de 1 instancia
+    SharedModule.forRoot(),
   ],
-  declarations: [],
-  providers: [],
 })
 export class AuthModule {}
